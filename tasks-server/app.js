@@ -23,7 +23,7 @@ function rowToObject(row) {
 
 
 app.get('/tasks/:due', (request, response) => {
-	const query = 'SELECT task, due, id FROM tasks WHERE is_deleted = 0 AND due <= ? ORDER BY due DESC';
+	const query = 'SELECT task, due, id FROM tasks WHERE is_deleted = 0 AND due <= ? ORDER BY due ASC';
 	const params = [request.params.due];
 	connection.query(query, params, (error, rows) => {
 		response.send({
@@ -55,7 +55,7 @@ app.patch('/tasks/:id', (request, response) => {
 });
 
 app.delete('/tasks/:id', (request, response) => {
-	const query = 'UPDATE tasks SET is_deleted 1 WHERE id = ?';
+	const query = 'UPDATE tasks SET is_deleted = 1 WHERE id = ?';
 	const params = [request.params.id];
 	connection.query(query, params, (error, result) => {
 		response.send({
